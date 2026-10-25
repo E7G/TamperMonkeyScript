@@ -371,7 +371,7 @@ const GenerateUserConfig = async (option: {
     showdown: {
       local: GetLib("showdown", true),
     },
-    "Element-Plus": {
+    "element-plus": {
       cdn: (async () => {
         const url = await GetLib("element-plus", false);
         return isMinify ? url : url.replace("min.js", "js");
@@ -694,7 +694,7 @@ const GenerateUserConfig = async (option: {
     );
 
     // 添加vue的油猴配置
-    const elementPlus_cdn = await externalRequireConfig["Element-Plus"].cdn;
+    const elementPlus_cdn = await externalRequireConfig["element-plus"].cdn;
     const VueMonkeyOption: Partial<__MonkeyOption__> = {
       userscript: {
         resource: {
