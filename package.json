@@ -1,11 +1,11 @@
 {
-  "name": "monkey-script-monorepo-project",
+  "name": "douyin-clean-userscript",
   "version": "1.0.0",
   "private": true,
-  "description": "油猴脚本",
+  "description": "Douyin web userscript: clean interface, ad filtering and player enhancements",
   "keywords": [],
-  "license": "MIT",
-  "author": "WhiteSev",
+  "license": "GPL-3.0-only",
+  "author": "WhiteSevs (original), E7G (customizations)",
   "type": "module",
   "scripts": {
     "format": "pnpm recursive run format",

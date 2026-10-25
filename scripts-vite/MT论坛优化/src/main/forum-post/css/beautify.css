@@ -1,9 +1,0 @@
-.pls .avatar img,
-.avtm img {
-  border-radius: 10%;
-}
-.pls .avatar img {
-  --avatar-size: 90px;
-  width: var(--avatar-size);
-  height: var(--avatar-size);
-}

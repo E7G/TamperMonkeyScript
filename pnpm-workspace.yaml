@@ -1,20 +1,10 @@
 packages:
-  - 'scripts-vite/**'
-  - '!lib/**'
+  - 'scripts-vite/抖音优化'
 
-# pnpm >= 11
 allowBuilds:
   esbuild: true
   vue-demi: true
 
-# pnpm < 11
 ignoredBuiltDependencies:
   - esbuild
   - vue-demi
-
-minimumReleaseAgeExclude:
-  - '@whitesev/data-paging'
-  - '@whitesev/domutils'
-  - '@whitesev/pops'
-  - '@whitesev/utils'
-  - 'qmsg'

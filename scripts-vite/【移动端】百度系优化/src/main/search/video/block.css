@@ -1,3 +1,0 @@
-.short-mini > div:has(script[data-for="native-ads"]) {
-  display: none !important;
-}

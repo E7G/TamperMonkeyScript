@@ -1,41 +1,43 @@
-name: 抖音优化
+name: Build Douyin userscript
 
 on:
   push:
-    branches: ["master"]
+    branches: [master]
     paths:
-      - "packages/抖音优化/**"
+      - "scripts-vite/抖音优化/**"
+      - "script-components/**"
+      - "lib/CoverUMD/**"
       - ".github/workflows/抖音优化.yaml"
-      - "!packages/抖音优化/README.md"
-      - "!packages/抖音优化/dist/*"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "package.json"
+      - "vite.utils.mts"
+  pull_request:
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - name: set git
-        run: |
-          git config --global core.symlinks false
-
-      - name: 校验
-        uses: actions/checkout@v4
-
-      - uses: volta-cli/action@v4
-
-      - name: 设置Node和pnpm
-        uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
         with:
-          version: 9
-
-      - name: 构建
-        run: |
-          cd ./packages/抖音优化
-          echo "当前目录："$(pwd)
-          pnpm install
-          pnpm run build
-
-      - name: 上传附件
-        uses: actions/upload-artifact@main
+          version: 10.17.1
+      - uses: actions/setup-node@v4
         with:
-          name: 抖音优化
-          path: ./packages/抖音优化/dist
+          node-version: "22"
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Type check
+        run: pnpm --dir scripts-vite/抖音优化 exec vue-tsc --noEmit
+      - name: Build userscript
+        run: pnpm --dir scripts-vite/抖音优化 exec vite build
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: douyin-clean-userscript
+          path: scripts-vite/抖音优化/dist/*.user.js
+          if-no-files-found: error

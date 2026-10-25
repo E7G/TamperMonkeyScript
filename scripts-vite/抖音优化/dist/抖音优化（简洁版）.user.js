@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         抖音优化（简洁版）
 // @namespace    https://github.com/E7G/TamperMonkeyScript
-// @version      2026.10.25
+// @version      2026.10.25.20
 // @author       WhiteSevs (original), E7G (customizations)
 // @description  视频过滤，包括广告、直播或自定义规则，屏蔽登录弹窗、自定义视频清晰度、禁止自动播放、自动进入全屏、双击进入全屏、屏蔽弹幕和礼物特效、手机模式、自定义视频和评论区背景色等
 // @license      GPL-3.0-only
