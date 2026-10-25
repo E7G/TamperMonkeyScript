@@ -1284,17 +1284,36 @@ export const DouYinVideoPlayer = {
         if (DouYinRouter.isLive()) {
           return;
         }
-        // 普通视频
-        $$<HTMLElement>(`.basePlayerContainer xg-right-grid:not(:has(.${downloadButtonClassName}))`).forEach(
-          ($xgRightGrid) => {
-            const $btn = createButton();
-            DOMUtils.on($btn, "click", async (event) => {
-              DOMUtils.preventEvent(event);
-              await onClick($btn);
-            });
-            DOMUtils.prepend($xgRightGrid, $btn);
+        // 普通视频：把下载按钮放在播放器「小窗模式」控件的右侧。
+        $$<HTMLElement>(".basePlayerContainer xg-right-grid").forEach(($xgRightGrid) => {
+          const $pipControl = $xgRightGrid.querySelector<HTMLElement>(
+            "xg-icon.xgplayer-pip, .xgplayer-pip"
+          );
+          if (!$pipControl) {
+            return;
           }
-        );
+          // 小窗模式按钮可能被额外容器包裹，定位到右侧控件组的直接子节点。
+          let $pipItem: HTMLElement = $pipControl;
+          while ($pipItem.parentElement && $pipItem.parentElement !== $xgRightGrid) {
+            $pipItem = $pipItem.parentElement;
+          }
+          if ($pipItem.parentElement !== $xgRightGrid) {
+            return;
+          }
+          let $btn = $xgRightGrid.querySelector<HTMLElement>(`.${downloadButtonClassName}`);
+          if (!$btn) {
+            const $downloadButton = createButton();
+            DOMUtils.on($downloadButton, "click", async (event) => {
+              DOMUtils.preventEvent(event);
+              await onClick($downloadButton);
+            });
+            $btn = $downloadButton;
+          }
+          // 页面局部刷新或控件顺序变化后自动恢复相邻位置，避免重复插入。
+          if ($pipItem.nextElementSibling !== $btn) {
+            $pipItem.insertAdjacentElement("afterend", $btn);
+          }
+        });
       });
       const observer = utils.mutationObserver(document, {
         config: {

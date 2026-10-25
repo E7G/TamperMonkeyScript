@@ -9,7 +9,13 @@ const userConfig = await GenerateUserConfig({
   projectDirName: utils.dirName,
   monkeyOption: {
     userscript: {
-      name: "抖音优化",
+      name: "抖音优化（简洁版）",
+      namespace: "https://github.com/E7G/TamperMonkeyScript",
+      author: "WhiteSevs (original), E7G (customizations)",
+      supportURL: "https://github.com/E7G/TamperMonkeyScript/issues",
+      homepageURL: "https://github.com/E7G/TamperMonkeyScript/tree/master/scripts-vite/%E6%8A%96%E9%9F%B3%E4%BC%98%E5%8C%96",
+      updateURL: "https://raw.githubusercontent.com/E7G/TamperMonkeyScript/master/scripts-vite/%E6%8A%96%E9%9F%B3%E4%BC%98%E5%8C%96/dist/%E6%8A%96%E9%9F%B3%E4%BC%98%E5%8C%96%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89.user.js",
+      downloadURL: "https://raw.githubusercontent.com/E7G/TamperMonkeyScript/master/scripts-vite/%E6%8A%96%E9%9F%B3%E4%BC%98%E5%8C%96/dist/%E6%8A%96%E9%9F%B3%E4%BC%98%E5%8C%96%EF%BC%88%E7%AE%80%E6%B4%81%E7%89%88%EF%BC%89.user.js",
       // GM_xmlhttpRequest允许访问的域
       connect: ["*", "www.toutiao.com"],
       // 脚本描述

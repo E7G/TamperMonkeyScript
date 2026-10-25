@@ -1,5 +1,7 @@
 # WhiteSevs/TamperMonkeyScript
 
+> **E7G Fork 定制版：** [抖音优化 · 简洁版说明及安装](README-CUSTOM.md)。以下其余内容为上游项目介绍，原作者 WhiteSevs。
+
 [![GitHub Star](https://img.shields.io/github/stars/WhiteSevs/TampermonkeyScript.svg?style=flat-square&label=Star&color=4285dd&logo=github)](https://github.com/WhiteSevs/TampermonkeyScript/)
 [![GitHub Fork](https://img.shields.io/github/forks/WhiteSevs/TampermonkeyScript.svg?style=flat-square&label=Fork&color=4285dd&logo=github)](https://github.com/WhiteSevs/TampermonkeyScript/)
 [![Github](https://data.jsdelivr.com/v1/package/gh/WhiteSevs/TampermonkeyScript/badge)](https://www.jsdelivr.com/package/gh/WhiteSevs/TamperMonkeyScript)

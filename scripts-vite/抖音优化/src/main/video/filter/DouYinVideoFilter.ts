@@ -148,7 +148,22 @@ export const DouYinVideoFilter = {
     if (!this.$data.enable) {
       return [];
     }
-    const videoFilterRules = this.$data.videoFilterRuleStorage.getAllRule();
+    // Built-in ad filter uses DouYinVideoFilterBase's isAds classification.
+    // Never write built-in rules into the user's editable rule storage.
+    const videoFilterRules = [...this.$data.videoFilterRuleStorage.getAllRule()];
+    if (Panel.getValue<boolean>("dy-video-filter-default-ads")) {
+      videoFilterRules.push({
+        enable: true,
+        uuid: "builtin-douyin-ads",
+        name: "内置规则：过滤广告",
+        data: {
+          scope: ["all"],
+          ruleName: "isAds",
+          ruleValue: "true",
+          remarks: "仅过滤平台明确标记为广告的视频",
+        },
+      });
+    }
     if (!videoFilterRules.length) {
       // 无规则，不过滤
       return [];

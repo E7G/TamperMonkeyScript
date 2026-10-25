@@ -224,7 +224,7 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
                           "dy-video-downloader-addDownloadButton",
                           true,
                           void 0,
-                          "在视频底部组件的最右边添加下载按钮"
+                          "在视频播放器底部控件的「小窗模式」右侧添加下载按钮"
                         ),
                         UISwitch(
                           "弹出下载重命名文件名弹窗",
@@ -596,6 +596,7 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
               type: "container",
               views: [
                 UISwitch("启用", "shieldVideo-exec-network-enable", true, void 0, "开启后以下功能才会生效"),
+                UISwitch("自动过滤广告视频", "dy-video-filter-default-ads", true, void 0, "过滤接口明确标记为广告的内容，不按关键词误杀普通视频"),
                 UISwitch(
                   "仅显示被过滤的视频",
                   "shieldVideo-only-show-filtered-video",
@@ -606,7 +607,7 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
                 UISwitch(
                   "新增 {...} 按钮",
                   "shieldVideo-add-parseVideoInfoButton",
-                  true,
+                  false,
                   void 0,
                   "在视频的底部的工具栏中显示 {...} 按钮，用于查看视频信息以便于进行添加过滤规则"
                 ),
@@ -651,7 +652,7 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
                   void 0,
                   "在右侧作者头像上方或者是在右侧区域"
                 ),
-                UISwitch("【屏蔽】AI抖音", "blockAIDouYin"),
+                UISwitch("【屏蔽】AI抖音", "blockAIDouYin", true),
                 UISwitch("【屏蔽】作者头像", "shieldAuthorAvatar"),
                 UISwitch(
                   "【屏蔽】直播小窗",
@@ -665,8 +666,8 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
                 UISwitch("【屏蔽】评论", "shieldCommentButton"),
                 UISwitch("【屏蔽】收藏", "shieldCollectionButton"),
                 UISwitch("【屏蔽】分享", "shieldSharenButton"),
-                UISwitch("【屏蔽】听抖音", "shieldListenDouYinButton"),
-                UISwitch("【屏蔽】看相关", "shieldRelatedRecommendationsButton"),
+                UISwitch("【屏蔽】听抖音", "shieldListenDouYinButton", true),
+                UISwitch("【屏蔽】看相关", "shieldRelatedRecommendationsButton", true),
                 UISwitch("【屏蔽】更多", "shieldMoreButton", false, void 0, "<code>...</code>按钮"),
               ],
             },
@@ -708,7 +709,7 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
                   void 0,
                   "黄色的标签，例如：<code>#女团</code>"
                 ),
-                UISwitch("【屏蔽】及时接收作品更新提醒", "dy-video-blockClickUpdateReminder", false),
+                UISwitch("【屏蔽】及时接收作品更新提醒", "dy-video-blockClickUpdateReminder", true),
                 UISwitch(
                   "【屏蔽】作者声明",
                   "dy-video-blockAuthorDeclaration",
@@ -716,7 +717,7 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
                   void 0,
                   "例如：<code>作者声明：虚构演绎，仅供娱乐</code>"
                 ),
-                UISwitch("【屏蔽】识别画面", "dy-video-blockAIIdentifyTheScreen", false),
+                UISwitch("【屏蔽】识别画面", "dy-video-blockAIIdentifyTheScreen", true),
               ],
             },
           ],
@@ -736,7 +737,7 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
                 UISwitch("【屏蔽】播放时长", "shieldBottomVideoToolBar-time"),
                 UISwitch("【屏蔽】章节要点", "shieldBottomVideoToolbar-blockChapterContainer", false),
                 UISwitch("【屏蔽】弹幕容器", "shieldBottomVideoToolbarDanmuContainer"),
-                UISwitch("【屏蔽】AI笔记", "shieldBottomVideoToolbar-aiNotes"),
+                UISwitch("【屏蔽】AI笔记", "shieldBottomVideoToolbar-aiNotes", true),
                 UISwitch("【屏蔽】连播", "shieldBottomVideoToolbar-autoPlay"),
                 UISwitch("【屏蔽】清屏", "shieldBottomVideoToolbar-clearScreen"),
                 UISwitch("【屏蔽】清晰度", "shieldBottomVideoToolbar-playclarity"),
@@ -792,7 +793,7 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
               text: AutoOpenOrClose.text(),
               views: [
                 UISwitch("【屏蔽】右侧的展开评论按钮", "shieldRightExpandCommentButton"),
-                UISwitch("【屏蔽】搜索悬浮栏", "shieldSearchFloatingBar", false, void 0, "一般出现在左上角"),
+                UISwitch("【屏蔽】搜索悬浮栏", "shieldSearchFloatingBar", true, void 0, "一般出现在左上角"),
                 UISwitch(
                   "【屏蔽】网页全屏关闭按钮",
                   "shieldCloseFullScreenButton",
@@ -807,7 +808,7 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
                   void 0,
                   "该元素出现在视频底部的用户名、标题信息的上面"
                 ),
-                UISwitch("【屏蔽】弹幕", "dy-video-blockDanmaku"),
+                UISwitch("【屏蔽】弹幕", "dy-video-blockDanmaku", true),
                 UISwitch(
                   "【屏蔽】中间的播放图标",
                   "dy-video-blockStartPlayIcon",
@@ -878,7 +879,7 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
                   "【屏蔽】点击或按<code>F</code>进入直播间",
                   "dy-video-live-block-tipClickOrKeyboardFEnterLiveRoom"
                 ),
-                UISwitch("【屏蔽】小黄车", "dy-video-live-block-yellowCar"),
+                UISwitch("【屏蔽】小黄车", "dy-video-live-block-yellowCar", true),
                 UISwitch("【屏蔽】本场高光", "dy-video-live-block-highlight"),
               ],
             },

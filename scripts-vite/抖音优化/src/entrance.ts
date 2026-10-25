@@ -14,6 +14,8 @@ import { MPanelShareChallengeConfig } from "./setting/mobile-view/shareChallenge
 import { MPanelShareVideoConfig } from "./setting/mobile-view/shareVideo";
 import { MPanelShareMusicConfig } from "./setting/mobile-view/shareMusic";
 import { PanelMenu } from "@components/setting/panel-menu";
+import { DouYinNativeSettings } from "./setting/DouYinNativeSettings";
+import { applyDouYinCleanDefaultsOnce } from "./setting/DouYinCleanDefaults";
 import { PanelRecommendConfig } from "./setting/view/recommend";
 import { PanelFollowrConfig } from "./setting/view/follow";
 import { PanelHotConfig } from "./setting/view/hot";
@@ -52,6 +54,10 @@ PanelMenu.addMenuOption({
   },
 });
 Panel.init();
+if (!MDouYinRouter.isMDouYin()) {
+  applyDouYinCleanDefaultsOnce();
+  DouYinNativeSettings.init();
+}
 if (MDouYinRouter.isMDouYin()) {
   MDouYin.init();
 } else {
