@@ -279,7 +279,10 @@ const GenerateUserConfig = async (option: {
   let VERSION = devOrLocalVersion;
   if (isBuild) {
     // 获取命令行参数
-    const commandEnv = getCommandArgv();
+    // pnpm exec on GitHub Actions does not always provide npm_config_argv.
+    // The build profile is optional; use the normal build path when absent.
+    const commandEnv =
+      process.env.npm_lifecycle_event || process.env.npm_config_argv ? getCommandArgv() : undefined;
     if (commandEnv === "all-new") {
       VERSION = rootUtils.getLatestScriptVersion();
       console.log("script build force new version: ", pc.green(VERSION));
