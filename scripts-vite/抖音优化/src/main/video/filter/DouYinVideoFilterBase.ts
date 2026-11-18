@@ -101,8 +101,12 @@ export class DouYinVideoFilterBase {
       .filter((item): item is string => typeof item === "string" && item.trim() !== "")
       .join(" ");
 
-    // 明确的 Vibe Coding / Vibe 知识大赏标签，直接命中。
-    if (/vibe知识大赏|vibe[\s_-]*coding|vibe[\s_-]*编程/i.test(searchableText)) {
+    // 仅匹配明确的话题标签，不屏蔽正文里正常讨论 Vibe Coding 的教程。
+    const vibeTagPattern = /^vibe[\s_-]*(?:知识大赏|coding|编程)$/i;
+    const explicitVibeTag =
+      [...info.textExtra, ...info.videoTag].some((tag) => vibeTagPattern.test(tag.trim())) ||
+      /#\s*vibe[\s_-]*(?:知识大赏|coding|编程)(?=[\s#，。！？!?]|$)/i.test(String(info.desc ?? ""));
+    if (explicitVibeTag) {
       return true;
     }
 
