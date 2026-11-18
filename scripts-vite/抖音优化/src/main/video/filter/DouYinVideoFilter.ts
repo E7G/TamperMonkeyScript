@@ -148,7 +148,7 @@ export const DouYinVideoFilter = {
     if (!this.$data.enable) {
       return [];
     }
-    // Built-in ad filter uses DouYinVideoFilterBase's isAds classification.
+    // Built-in filters use internal classifiers and stay separate from user-editable rules.
     // Never write built-in rules into the user's editable rule storage.
     const videoFilterRules = [...this.$data.videoFilterRuleStorage.getAllRule()];
     if (Panel.getValue<boolean>("dy-video-filter-default-ads")) {
