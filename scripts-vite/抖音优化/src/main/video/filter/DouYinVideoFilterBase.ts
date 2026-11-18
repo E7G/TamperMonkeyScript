@@ -102,7 +102,7 @@ export class DouYinVideoFilterBase {
       .join(" ");
 
     // 明确的 Vibe Coding / Vibe 知识大赏标签，直接命中。
-    if (/vibe知识大赏|vibe[\\s_-]*coding|vibe[\\s_-]*编程/i.test(searchableText)) {
+    if (/vibe知识大赏|vibe[\s_-]*coding|vibe[\s_-]*编程/i.test(searchableText)) {
       return true;
     }
 
@@ -116,10 +116,10 @@ export class DouYinVideoFilterBase {
       mixText
     );
     const normalizedDesc = String(info.desc ?? "")
-      .replace(/#[^\\s#]+/g, "")
-      .replace(/\\s+/g, " ")
+      .replace(/#[^\s#]+/g, "")
+      .replace(/\s+/g, " ")
       .trim();
-    const repeatedDesc = /(.{8,}?)\\s+\\1(?:[。！？!?]|\\s|$)/i.test(normalizedDesc);
+    const repeatedDesc = /(.{8,}?)\s+\1(?:[。！？!?]|\s|$)/i.test(normalizedDesc);
     const mbtiSuggestCount = info.suggestWord.filter((word) => /mbti|人格测试|性格测试/i.test(word)).length;
     const personalityTestSignal = /人格测试|性格测试/i.test(searchableText);
     const templateSignalCount = [
