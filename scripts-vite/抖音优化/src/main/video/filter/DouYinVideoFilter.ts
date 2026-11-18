@@ -164,6 +164,20 @@ export const DouYinVideoFilter = {
         },
       });
     }
+    if (Panel.getValue<boolean>("dy-video-filter-low-quality-vibe")) {
+      videoFilterRules.push({
+        enable: true,
+        uuid: "builtin-low-quality-vibe-content",
+        name: "内置规则：过滤低质 Vibe / AI 批量内容",
+        data: {
+          scope: ["all"],
+          ruleName: "desc",
+          isFunctionHandler: true,
+          ruleValue: "builtin:low-quality-vibe-content",
+          remarks: "识别明确的 Vibe 标签，以及重复文案、古人 MBTI 合集和批量推荐词等组合特征",
+        },
+      });
+    }
     if (!videoFilterRules.length) {
       // 无规则，不过滤
       return [];
