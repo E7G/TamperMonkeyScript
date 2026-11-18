@@ -85,6 +85,57 @@ export class DouYinVideoFilterBase {
     };
   }
   /**
+   * 识别明确标注为 Vibe 内容，以及带有多重模板化特征的批量伪知识内容。
+   * 不因单独出现 AI、MBTI、历史人物或三体等词语而过滤。
+   */
+  isLowQualityVibeContent(info: DouYinVideoConversionInfo): boolean {
+    const searchableText = [
+      info.desc,
+      info.originDesc,
+      info.mixInfoName,
+      info.mixInfoDesc,
+      ...info.textExtra,
+      ...info.videoTag,
+      ...info.suggestWord,
+    ]
+      .filter((item): item is string => typeof item === "string" && item.trim() !== "")
+      .join(" ");
+
+    // 仅匹配明确的话题标签，不屏蔽正文里正常讨论 Vibe Coding 的教程。
+    const vibeTagPattern = /^vibe[\s_-]*(?:知识大赏|coding|编程)$/i;
+    const explicitVibeTag =
+      [...info.textExtra, ...info.videoTag].some((tag) => vibeTagPattern.test(tag.trim())) ||
+      /#\s*vibe[\s_-]*(?:知识大赏|coding|编程)(?=[\s#，。！？!?]|$)/i.test(String(info.desc ?? ""));
+    if (explicitVibeTag) {
+      return true;
+    }
+
+    // MBTI 本身不是低质信号；必须同时具备历史人物语境和至少两项批量模板特征。
+    if (!/mbti/i.test(searchableText) || !/古人|古代|历史人物|历史名人|诗人|李白|杜甫|苏轼/i.test(searchableText)) {
+      return false;
+    }
+
+    const mixText = `${info.mixInfoName ?? ""} ${info.mixInfoDesc ?? ""}`;
+    const collectionTemplate = /(?:古人|古代名人|历史人物).{0,12}mbti|mbti.{0,12}(?:古人|古代名人|历史人物)/i.test(
+      mixText
+    );
+    const normalizedDesc = String(info.desc ?? "")
+      .replace(/#[^\s#]+/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+    const repeatedDesc = /(.{8,}?)\s+\1(?:[。！？!?]|\s|$)/i.test(normalizedDesc);
+    const mbtiSuggestCount = info.suggestWord.filter((word) => /mbti|人格测试|性格测试/i.test(word)).length;
+    const personalityTestSignal = /人格测试|性格测试/i.test(searchableText);
+    const templateSignalCount = [
+      collectionTemplate,
+      repeatedDesc,
+      mbtiSuggestCount >= 3,
+      personalityTestSignal,
+    ].filter(Boolean).length;
+
+    return templateSignalCount >= 2;
+  }
+  /**
    * 解析awemeInfo转为规则过滤的字典
    * @param awemeInfo 视频信息结构
    * @param from awemeInfo是否来自页面上的，否则就是来自网络的
@@ -880,6 +931,9 @@ export class DouYinVideoFilterBase {
     // 判断是否是使用自定义函数处理
     const isFunctionHandler = Boolean(ruleDynamicOption.isFunctionHandler);
     if (isFunctionHandler && typeof config.ruleValue === "string") {
+      if (config.ruleValue === "builtin:low-quality-vibe-content") {
+        return this.isLowQualityVibeContent(config.transformAwemeInfo);
+      }
       const data = {
         ruleKey: config.ruleKey,
         transformAwemeInfo: config.transformAwemeInfo,

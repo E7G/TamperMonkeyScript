@@ -148,7 +148,7 @@ export const DouYinVideoFilter = {
     if (!this.$data.enable) {
       return [];
     }
-    // Built-in ad filter uses DouYinVideoFilterBase's isAds classification.
+    // Built-in filters use internal classifiers and stay separate from user-editable rules.
     // Never write built-in rules into the user's editable rule storage.
     const videoFilterRules = [...this.$data.videoFilterRuleStorage.getAllRule()];
     if (Panel.getValue<boolean>("dy-video-filter-default-ads")) {
@@ -161,6 +161,20 @@ export const DouYinVideoFilter = {
           ruleName: "isAds",
           ruleValue: "true",
           remarks: "仅过滤平台明确标记为广告的视频",
+        },
+      });
+    }
+    if (Panel.getValue<boolean>("dy-video-filter-low-quality-vibe")) {
+      videoFilterRules.push({
+        enable: true,
+        uuid: "builtin-low-quality-vibe-content",
+        name: "内置规则：过滤低质 Vibe / AI 批量内容",
+        data: {
+          scope: ["all"],
+          ruleName: "desc",
+          isFunctionHandler: true,
+          ruleValue: "builtin:low-quality-vibe-content",
+          remarks: "识别明确的 Vibe 标签，以及重复文案、古人 MBTI 合集和批量推荐词等组合特征",
         },
       });
     }

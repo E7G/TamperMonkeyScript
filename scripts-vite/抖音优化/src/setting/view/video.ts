@@ -598,6 +598,13 @@ export const PanelVideoConfig: PopsPanelContentConfig = {
                 UISwitch("启用", "shieldVideo-exec-network-enable", true, void 0, "开启后以下功能才会生效"),
                 UISwitch("自动过滤广告视频", "dy-video-filter-default-ads", true, void 0, "过滤接口明确标记为广告的内容，不按关键词误杀普通视频"),
                 UISwitch(
+                  "过滤低质 Vibe / AI 批量内容",
+                  "dy-video-filter-low-quality-vibe",
+                  true,
+                  void 0,
+                  "过滤 #vibe知识大赏、Vibe Coding，以及重复文案、古人 MBTI 批量盘点等模板化内容；不会单独屏蔽三体、历史、MBTI 或 AI 关键词"
+                ),
+                UISwitch(
                   "仅显示被过滤的视频",
                   "shieldVideo-only-show-filtered-video",
                   false,
